@@ -131,22 +131,15 @@ init(from decoder: Decoder) throws {
     }
 }
 
-public struct CodingKeyMacro: MemberMacro {
-    public static func expansion(
-        of node: AttributeSyntax,
-        providingMembersOf declaration: some DeclGroupSyntax,
-        in context: some MacroExpansionContext
-    ) throws -> [DeclSyntax] {
+public struct CodingKeyMacro: PeerMacro {
+    public static func expansion(of node: SwiftSyntax.AttributeSyntax, providingPeersOf declaration: some SwiftSyntax.DeclSyntaxProtocol, in context: some SwiftSyntaxMacros.MacroExpansionContext) throws -> [SwiftSyntax.DeclSyntax] {
         []
     }
 }
 
-public struct IgnoredMacro: MemberMacro {
-    public static func expansion(
-        of node: AttributeSyntax,
-        providingMembersOf declaration: some DeclGroupSyntax,
-        in context: some MacroExpansionContext
-    ) throws -> [DeclSyntax] {
+public struct IgnoredMacro: PeerMacro {
+    
+    public static func expansion(of node: SwiftSyntax.AttributeSyntax, providingPeersOf declaration: some SwiftSyntax.DeclSyntaxProtocol, in context: some SwiftSyntaxMacros.MacroExpansionContext) throws -> [SwiftSyntax.DeclSyntax] {
         []
     }
 }

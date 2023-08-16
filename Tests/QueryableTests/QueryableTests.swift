@@ -11,7 +11,7 @@ let entityMacro: [String: Macro.Type] = [
 
 
 final class QueryableTests: XCTestCase {
-    func testMacro() {
+    func testEntityMacro() {
         assertMacroExpansion(
             """
             @Entity struct Hero {
@@ -39,16 +39,38 @@ final class QueryableTests: XCTestCase {
             macros: entityMacro
         )
     }
+    
+    func fieldWithCustomName() {
+        assertMacroExpansion(
+            """
+            @Entity struct Hero {
+                @CodingKey("char")
+                let character: String
+            }
+            """,
+            expandedSource: """
+            struct Hero {
+                let character: String
+                enum CodingKeys: String, CodingKey, CaseIterable {
+                    case character = "char"
+                }
+                init(from decoder: Decoder) throws {
+                    let container = try decoder.container(keyedBy: CodingKeys.self)
+                    character = try container.decode(String.self, forKey: .character)
+                }
+            }
+            extension Hero: EntitySpecific, CodingKeyIterable, Decodable {
+                static var entityName: String {
+                    "Hero"
+                }
+            }
+            """,
+            macros: entityMacro
+        )
+    }
+    
+    func throwErrorWhenApplyEntityToNonClassOrStruct() {
+        
+    }
 
-//    func testMacroWithStringLiteral() {
-//        assertMacroExpansion(
-//            #"""
-//            #stringify("Hello, \(name)")
-//            """#,
-//            expandedSource: #"""
-//            ("Hello, \(name)", #""Hello, \(name)""#)
-//            """#,
-//            macros: testMacros
-//        )
-//    }
 }

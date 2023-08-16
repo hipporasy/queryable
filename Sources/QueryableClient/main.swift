@@ -24,3 +24,5 @@ struct Bottle {
     let id: String
     let color: String
 }
+
+print(Hero.entityName)

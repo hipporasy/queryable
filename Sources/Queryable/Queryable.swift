@@ -1,10 +1,10 @@
 @attached(member, names: named(CodingKeys), named(init(from:)))
-@attached(conformance)
+@attached(extension, conformances: EntitySpecific, CodingKeyIterable, Decodable, names: named(entityName))
 public macro Entity() = #externalMacro(module: "QueryableMacros", type: "EntityMacro")
 
-@attached(member)
+@attached(peer)
 public macro CodingKey(_ key: String) = #externalMacro(module: "QueryableMacros", type: "CodingKeyMacro")
 
-@attached(member)
+@attached(peer)
 public macro Ignored() = #externalMacro(module: "QueryableMacros", type: "IgnoredMacro")
 
