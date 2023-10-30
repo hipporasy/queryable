@@ -59,13 +59,13 @@ extension VariableDeclSyntax {
         }
         
         let binding = bindings.first!
-        switch binding.accessor {
+        switch binding.accessorBlock?.accessors {
         case .none:
             return true
             
         case .accessors(let node):
-            for accessor in node.accessors {
-                switch accessor.accessorKind.tokenKind {
+            for accessor in node {
+                switch accessor.accessorSpecifier.tokenKind {
                 case .keyword(.willSet), .keyword(.didSet):
                     // Observers can occur on a stored property.
                     break

@@ -116,7 +116,7 @@ init(from decoder: Decoder) throws {
         attributes?.first {
             $0.as(AttributeSyntax.self)?
                 .attributeName
-                .as(SimpleTypeIdentifierSyntax.self)?
+                .as(IdentifierTypeSyntax.self)?
                 .description == macroName
         }
     }
@@ -124,8 +124,8 @@ init(from decoder: Decoder) throws {
     private static func customKey(in attributesElement: AttributeListSyntax.Element) -> ExprSyntax? {
         attributesElement
             .as(AttributeSyntax.self)?
-            .argument?
-            .as(TupleExprElementListSyntax.self)?
+            .arguments?
+            .as(LabeledExprListSyntax.self)?
             .first?
             .expression
     }
